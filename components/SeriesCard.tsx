@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { BUILDS, SOLE, type Build, type Series } from "@/lib/series";
+import { BUILDS, type Build, type Series } from "@/lib/series";
 import { CONTOURS } from "@/lib/contours";
 import TerrainContour from "./TerrainContour";
 
@@ -43,7 +43,7 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
                 className={`object-cover transition-opacity duration-500 ${sole ? "opacity-0" : "opacity-100"}`}
               />
               <Image
-                src={SOLE}
+                src={`/images/sole-${series.name.toLowerCase()}.png`}
                 alt="The GETA contour outsole — the same sole on every pair"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
