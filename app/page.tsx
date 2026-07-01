@@ -14,8 +14,8 @@ export default function Home() {
       <main>
         <Hero />
         <Manifesto />
-        <LifestyleBand />
         <SeriesShowcase />
+        <LifestyleBand />
         <WhyGetah />
         <Waitlist />
       </main>
