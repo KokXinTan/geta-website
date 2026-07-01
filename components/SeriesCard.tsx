@@ -34,26 +34,20 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
             className="group relative block w-full overflow-hidden hair border-getah/10 shadow-soft-lg"
             style={{ backgroundColor: "#e7e3da" }}
           >
-            {/* the peak's real contour, as the backdrop */}
-            <TerrainContour
-              d={CONTOURS[series.name.toLowerCase()]}
-              className="absolute inset-0 h-full w-full text-getah/20"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(255,255,255,0.45),transparent_68%)]" />
             <div className="relative aspect-square w-full">
               <Image
                 src={series.images[build]}
                 alt={`The GETA ${series.name} ${BUILDS[build].label}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className={`object-contain p-6 transition-opacity duration-500 [filter:drop-shadow(0_16px_18px_rgba(23,20,15,0.22))] ${sole ? "opacity-0" : "opacity-100"}`}
+                className={`object-cover transition-opacity duration-500 ${sole ? "opacity-0" : "opacity-100"}`}
               />
               <Image
                 src={SOLE}
                 alt="The GETA contour outsole — the same sole on every pair"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className={`object-contain p-6 transition-opacity duration-500 [filter:drop-shadow(0_16px_18px_rgba(23,20,15,0.22))] ${sole ? "opacity-100" : "opacity-0"}`}
+                className={`object-cover transition-opacity duration-500 ${sole ? "opacity-100" : "opacity-0"}`}
               />
             </div>
             <span className="pointer-events-none absolute bottom-3 right-3 border border-getah/15 bg-kabus/85 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-getah/70 backdrop-blur">
