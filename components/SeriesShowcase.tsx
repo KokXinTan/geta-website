@@ -11,12 +11,13 @@ export default function SeriesShowcase() {
             The collections
           </p>
           <h2 className="mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl">
-            Five peaks. Two ways up.
-            <span className="text-kabus/40"> Every collection comes Low or Boot.</span>
+            One shoe, built two ways.
+            <span className="text-kabus/40"> Five peaks, five contours.</span>
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-kabus/60">
-            Each GETA is named after a Malaysian mountain and built on the same GETA™ contour
-            outsole — pick the fast-and-light Low or the full-protection Boot. Hover any shoe to
+            Every GETA rides the same platform and the same GETA™ contour sole. The build sets
+            the specs — fast-and-light Low or full-protection Boot. The edition swaps in one
+            thing: a peak&apos;s colour and its contour, printed on the heel. Hover any shoe to
             see the sole.
           </p>
         </div>

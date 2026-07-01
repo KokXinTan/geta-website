@@ -16,8 +16,8 @@ const FEATURES = [
   {
     code: "GT-03",
     tag: "Tahan lasak",
-    title: "Built to last seasons",
-    body: "One-piece rubber construction with almost nothing to fall apart. Made for years, not one hike.",
+    title: "Built to be resoled",
+    body: "Vulcanised and stitched, not glued and tossed. Suede that only wears in better, and an outsole you replace when the tread finally goes — so the shoe outlasts the seasons.",
     color: "#1f9d57",
   },
   {

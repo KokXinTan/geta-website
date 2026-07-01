@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { BUILDS, type Build, type Series } from "@/lib/series";
+import { BUILDS, SPEC_LABELS, type Build, type Series } from "@/lib/series";
 import TerrainContour from "./TerrainContour";
 
 function Meter({ label, value, color }: { label: string; value: number; color: string }) {
@@ -15,7 +15,7 @@ function Meter({ label, value, color }: { label: string; value: number; color: s
         {Array.from({ length: 5 }).map((_, i) => (
           <span
             key={i}
-            className="h-2.5 w-5"
+            className="h-2.5 w-5 transition-colors"
             style={{ backgroundColor: i < value ? color : "rgba(23,20,15,0.1)" }}
           />
         ))}
@@ -31,6 +31,7 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
 
   const [build, setBuild] = useState<Build>("low");
   const [sole, setSole] = useState(false);
+  const specs = BUILDS[build].specs;
 
   return (
     <article className={`hair-b border-getah/10 ${bg}`}>
@@ -74,80 +75,92 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
           </button>
         </div>
 
-        {/* technical readout */}
-        <div className={`relative ${flip ? "md:order-1" : ""}`}>
-          <TerrainContour
-            kind={series.contour}
-            className="pointer-events-none absolute -right-6 -top-10 h-56 w-56 md:h-72 md:w-72"
-            opacity={0.12}
-          />
-          <div className="relative">
-            <p className="mb-3 flex items-center gap-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-getah/60">
-              <span
-                className="inline-block h-2.5 w-2.5"
-                style={{ backgroundColor: series.color }}
-                aria-hidden="true"
+        {/* edition + build readout */}
+        <div className={flip ? "md:order-1" : ""}>
+          <p className="mb-3 flex items-center gap-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-getah/60">
+            <span
+              className="inline-block h-2.5 w-2.5"
+              style={{ backgroundColor: series.color }}
+              aria-hidden="true"
+            />
+            Siri {num} · {series.state}
+          </p>
+
+          <h3 className="font-display text-5xl font-extrabold leading-none tracking-tight text-getah sm:text-6xl">
+            {series.name}
+          </h3>
+          <p className="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-getah/50">
+            {series.gunung} · {series.difficulty} · {series.hook}
+          </p>
+
+          {/* the swappable bit: this peak's contour panel */}
+          <div className="mt-5 overflow-hidden hair border-getah/15">
+            <div
+              className="relative h-20"
+              style={{ backgroundColor: series.color, color: series.ink }}
+            >
+              <TerrainContour
+                kind={series.contour}
+                className="absolute inset-0 h-full w-full"
+                opacity={0.55}
               />
-              Siri {num} · {series.state}
-            </p>
-
-            <h3 className="font-display text-5xl font-extrabold leading-none tracking-tight text-getah sm:text-6xl">
-              {series.name}
-            </h3>
-            <p className="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-getah/50">
-              {series.gunung} · {series.difficulty} · {series.hook}
-            </p>
-
-            {/* build toggle */}
-            <div className="mt-5 inline-flex hair border-getah/20">
-              {(Object.keys(BUILDS) as Build[]).map((b) => (
-                <button
-                  key={b}
-                  type="button"
-                  onClick={() => setBuild(b)}
-                  aria-pressed={build === b}
-                  className="px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em] transition-colors"
-                  style={
-                    build === b
-                      ? { backgroundColor: series.color, color: series.ink }
-                      : { color: "rgba(23,20,15,0.55)" }
-                  }
-                >
-                  {BUILDS[b].label}
-                </button>
-              ))}
-            </div>
-            <p className="mt-3 max-w-md text-sm leading-relaxed text-getah/60">
-              {BUILDS[build].note}
-            </p>
-
-            <p className="mt-4 max-w-md text-lg leading-relaxed text-getah/75">{series.blurb}</p>
-
-            {/* elevation as the headline figure */}
-            <div className="mt-7 flex items-end gap-3">
-              <span className="font-display text-6xl font-extrabold leading-none tabular-nums text-getah sm:text-7xl">
-                {series.elevation_m.toLocaleString()}
-              </span>
-              <span className="mb-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-getah/50">
-                metres
-                <br />
-                above sea
-              </span>
-            </div>
-
-            <div className="mt-6">
-              <Meter label="Grip" value={series.grip} color={series.color} />
-              <Meter label="Kalis air" value={series.water} color={series.color} />
-              <div className="flex items-start justify-between gap-4 py-3 hair-t border-getah/10">
-                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-getah/60">
-                  Terrain
+              <div className="absolute inset-0 flex items-center justify-between px-4">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em]">
+                  Kontur panel
                 </span>
-                <span className="max-w-[62%] text-right font-mono text-[11px] uppercase tracking-[0.08em] text-getah/80">
-                  {series.terrain}
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] opacity-80">
+                  {series.gunung}
                 </span>
               </div>
             </div>
           </div>
+
+          <p className="mt-4 max-w-md text-lg leading-relaxed text-getah/75">{series.blurb}</p>
+
+          {/* build toggle — sets the platform + specs */}
+          <div className="mt-6 inline-flex hair border-getah/20">
+            {(Object.keys(BUILDS) as Build[]).map((b) => (
+              <button
+                key={b}
+                type="button"
+                onClick={() => setBuild(b)}
+                aria-pressed={build === b}
+                className="px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em] transition-colors"
+                style={
+                  build === b
+                    ? { backgroundColor: series.color, color: series.ink }
+                    : { color: "rgba(23,20,15,0.55)" }
+                }
+              >
+                {BUILDS[b].label}
+              </button>
+            ))}
+          </div>
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-getah/60">
+            {BUILDS[build].note}
+          </p>
+
+          {/* elevation figure */}
+          <div className="mt-6 flex items-end gap-3">
+            <span className="font-display text-6xl font-extrabold leading-none tabular-nums text-getah sm:text-7xl">
+              {series.elevation_m.toLocaleString()}
+            </span>
+            <span className="mb-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-getah/50">
+              metres
+              <br />
+              above sea
+            </span>
+          </div>
+
+          {/* specs — set by the build, shared across editions */}
+          <div className="mt-6">
+            {SPEC_LABELS.map((s) => (
+              <Meter key={s.key} label={s.label} value={specs[s.key]} color={series.color} />
+            ))}
+          </div>
+          <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-getah/40">
+            Specs set by build · {BUILDS[build].label}
+          </p>
         </div>
       </div>
     </article>
