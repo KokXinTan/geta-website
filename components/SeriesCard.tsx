@@ -73,9 +73,15 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
             Siri {num} · {series.state}
           </p>
 
-          <h3 className="font-display text-5xl font-extrabold leading-none tracking-tight text-getah sm:text-6xl">
-            {series.name}
-          </h3>
+          <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+            <h3 className="font-display text-5xl font-extrabold leading-none tracking-tight text-getah sm:text-6xl">
+              {series.name}
+            </h3>
+            <span className="font-mono text-sm font-bold uppercase tracking-[0.12em] text-getah/55">
+              {series.elevation_m.toLocaleString()} m{" "}
+              <span className="text-getah/35">above sea</span>
+            </span>
+          </div>
           <p className="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-getah/50">
             {series.gunung} · {series.difficulty} · {series.hook}
           </p>
@@ -130,18 +136,6 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
           <p className="mt-3 max-w-md text-sm leading-relaxed text-getah/60">
             {BUILDS[build].note}
           </p>
-
-          {/* elevation figure */}
-          <div className="mt-6 flex items-end gap-3">
-            <span className="font-display text-6xl font-extrabold leading-none tabular-nums text-getah sm:text-7xl">
-              {series.elevation_m.toLocaleString()}
-            </span>
-            <span className="mb-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-getah/50">
-              metres
-              <br />
-              above sea
-            </span>
-          </div>
         </div>
       </div>
     </article>
