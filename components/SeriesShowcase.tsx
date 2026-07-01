@@ -17,8 +17,8 @@ export default function SeriesShowcase() {
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-kabus/60">
             Every GETA rides the same platform and the same GETA™ contour sole — same grip on
             every pair. The build sets the cut and cushion: fast-and-light Low or full-protection
-            Boot. The edition changes one thing — a colour, and a contour pattern on that fabric.
-            Hover any shoe for the sole.
+            Boot. The edition changes one thing — a colour, and that peak&apos;s real contour
+            lines (pulled from elevation data) on the fabric. Hover any shoe for the sole.
           </p>
         </div>
       </div>

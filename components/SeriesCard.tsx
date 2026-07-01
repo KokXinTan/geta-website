@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { BUILDS, SPEC_LABELS, GRIP_INDEX, SOLE, type Build, type Series } from "@/lib/series";
+import { CONTOURS } from "@/lib/contours";
 import TerrainContour from "./TerrainContour";
 
 function Meter({ label, value, color }: { label: string; value: number; color: string }) {
@@ -93,29 +94,30 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
             {series.gunung} · {series.difficulty} · {series.hook}
           </p>
 
-          {/* the one part that changes: a contour design pattern on this colour */}
+          {/* the one part that changes: this peak's REAL contour on the colour */}
           <div className="mt-5 overflow-hidden hair border-getah/15">
             <div
-              className="relative h-20"
+              className="relative h-24"
               style={{ backgroundColor: series.color, color: series.ink }}
             >
               <TerrainContour
-                kind={series.contour}
+                d={CONTOURS[series.name.toLowerCase()]}
                 className="absolute inset-0 h-full w-full"
-                opacity={0.55}
+                opacity={0.6}
               />
               <div className="absolute inset-0 flex items-center justify-between px-4">
                 <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em]">
-                  Corak kontur
+                  Kontur sebenar
                 </span>
                 <span className="font-mono text-[11px] uppercase tracking-[0.12em] opacity-80">
-                  {series.name}
+                  {series.gunung}
                 </span>
               </div>
             </div>
           </div>
           <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-getah/40">
-            The one part that changes — this contour pattern, on {series.name} fabric.
+            The one part that changes — {series.gunung}&apos;s real topography, on {series.name}{" "}
+            fabric.
           </p>
 
           <p className="mt-4 max-w-md text-lg leading-relaxed text-getah/75">{series.blurb}</p>
