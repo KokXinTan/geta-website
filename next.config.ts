@@ -1,13 +1,9 @@
 import type { NextConfig } from "next";
 
-// Static export for GitHub Pages (project site served at /geta-website).
-const repo = "geta-website";
-
+// Static export, served at the domain root (Cloudflare Pages).
 const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
-  basePath: `/${repo}`,
-  assetPrefix: `/${repo}/`,
   trailingSlash: true,
 };
 

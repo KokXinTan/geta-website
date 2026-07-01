@@ -19,7 +19,7 @@ const spaceMono = Space_Mono({
   weight: ["400", "700"],
 });
 
-const SITE_URL = "https://kokxintan.github.io/geta-website";
+const SITE_URL = "https://geta-website.pages.dev";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
