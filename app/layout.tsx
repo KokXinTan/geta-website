@@ -19,7 +19,7 @@ const spaceMono = Space_Mono({
   weight: ["400", "700"],
 });
 
-const SITE_URL = "https://geta.my";
+const SITE_URL = "https://kokxintan.github.io/geta-website";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
       "The RM15 legend, reimagined. Bright, fashionable trail shoes built for Malaysian terrain.",
     url: SITE_URL,
     siteName: "GETA",
-    images: [{ url: "/images/og.png", width: 1200, height: 675, alt: "GETA" }],
+    images: [{ url: `${SITE_URL}/images/og.png`, width: 1200, height: 675, alt: "GETA" }],
     locale: "en_MY",
     type: "website",
   },
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "GETA — From the kampung to the summit.",
     description: "The RM15 legend, reimagined. Trail shoes built for Malaysian terrain.",
-    images: ["/images/og.png"],
+    images: [`${SITE_URL}/images/og.png`],
   },
 };
 
