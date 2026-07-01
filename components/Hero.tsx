@@ -67,11 +67,11 @@ export default function Hero() {
             <div className="relative aspect-square w-full md:aspect-[4/5]">
               <Image
                 src="/images/hero.png"
-                alt="A hiker stepping across mossy granite in the misty rainforest wearing the GETA Tahan Low in burnt orange"
+                alt="The GETA Tahan Low in burnt orange on wet mossy granite, misty rainforest ridgeline behind at golden hour"
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 45vw"
-                className="object-cover object-[center_62%]"
+                className="object-cover object-center"
               />
             </div>
             <div className="flex items-center justify-between hair-t border-getah/10 bg-susu px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-getah/70">
