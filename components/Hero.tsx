@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 import ContourLines from "./ContourLines";
 
 const TICKER = [
@@ -66,7 +67,7 @@ export default function Hero() {
           <div className="overflow-hidden hair border-getah/10 bg-susu shadow-soft-lg">
             <div className="relative aspect-square w-full md:aspect-[4/5]">
               <Image
-                src="/images/hero.png"
+                src={asset("/images/hero.png")}
                 alt="The GETA Tahan Low in burnt orange on wet mossy granite, misty rainforest ridgeline behind at golden hour"
                 fill
                 priority

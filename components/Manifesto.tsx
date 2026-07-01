@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 
 export default function Manifesto() {
   return (
@@ -8,7 +9,7 @@ export default function Manifesto() {
           <div className="overflow-hidden hair border-getah/10 shadow-soft-lg">
             <div className="relative aspect-[4/3] w-full">
               <Image
-                src="/images/heritage.png"
+                src={asset("/images/heritage.png")}
                 alt="A worn pair of classic black rubber kampung shoes on a muddy jungle floor"
                 fill
                 sizes="(max-width: 768px) 100vw, 45vw"

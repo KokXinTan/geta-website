@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { BUILDS, type Build, type Series } from "@/lib/series";
 import { CONTOURS } from "@/lib/contours";
+import { asset } from "@/lib/asset";
 import TerrainContour from "./TerrainContour";
 
 export default function SeriesCard({ series, index }: { series: Series; index: number }) {
@@ -36,14 +37,14 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
           >
             <div className="relative aspect-square w-full">
               <Image
-                src={series.images[build]}
+                src={asset(series.images[build])}
                 alt={`The GETA ${series.name} ${BUILDS[build].label}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className={`object-cover transition-opacity duration-500 ${sole ? "opacity-0" : "opacity-100"}`}
               />
               <Image
-                src={`/images/sole-${series.name.toLowerCase()}.png`}
+                src={asset(`/images/sole-${series.name.toLowerCase()}.png`)}
                 alt="The GETA contour outsole — the same sole on every pair"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"

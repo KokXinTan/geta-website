@@ -1,11 +1,12 @@
 import Image from "next/image";
+import { asset } from "@/lib/asset";
 
 export default function LifestyleBand() {
   return (
     <section className="relative hair-b border-getah/10">
       <div className="relative h-[70vh] min-h-[420px] w-full overflow-hidden">
         <Image
-          src="/images/lifestyle-summit.png"
+          src={asset("/images/lifestyle-summit.png")}
           alt="A hiker on a misty Malaysian granite summit above a sea of clouds"
           fill
           sizes="100vw"
