@@ -1,5 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import type { Series } from "@/lib/series";
+import { BUILDS, type Build, type Series } from "@/lib/series";
+import TerrainContour from "./TerrainContour";
 
 function Meter({ label, value, color }: { label: string; value: number; color: string }) {
   return (
@@ -20,23 +24,13 @@ function Meter({ label, value, color }: { label: string; value: number; color: s
   );
 }
 
-function SpecRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-start justify-between gap-4 py-3 hair-t border-getah/10">
-      <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-getah/60">
-        {label}
-      </span>
-      <span className="max-w-[62%] text-right font-mono text-[11px] uppercase tracking-[0.08em] text-getah/80">
-        {value}
-      </span>
-    </div>
-  );
-}
-
 export default function SeriesCard({ series, index }: { series: Series; index: number }) {
   const flip = index % 2 === 1;
   const num = String(index + 1).padStart(2, "0");
   const bg = index % 2 === 0 ? "bg-susu" : "bg-kabus";
+
+  const [build, setBuild] = useState<Build>("low");
+  const [sole, setSole] = useState(false);
 
   return (
     <article className={`hair-b border-getah/10 ${bg}`}>
@@ -45,64 +39,114 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
           flip ? "md:grid-cols-[1.1fr_0.9fr]" : "md:grid-cols-[0.9fr_1.1fr]"
         }`}
       >
-        {/* product tile — colourway baked into the shot */}
+        {/* product tile — hover/tap flips to the GETA sole */}
         <div className={`relative ${flip ? "md:order-2" : ""}`}>
-          <div className="overflow-hidden hair border-getah/10 shadow-soft-lg">
-            <div className="relative aspect-square w-full" style={{ backgroundColor: series.color }}>
+          <button
+            type="button"
+            onMouseEnter={() => setSole(true)}
+            onMouseLeave={() => setSole(false)}
+            onFocus={() => setSole(true)}
+            onBlur={() => setSole(false)}
+            onClick={() => setSole((s) => !s)}
+            aria-label={`${series.name} ${BUILDS[build].label} — ${sole ? "show the shoe" : "show the GETA sole"}`}
+            className="group relative block w-full overflow-hidden hair border-getah/10 shadow-soft-lg"
+            style={{ backgroundColor: "#e7e3da" }}
+          >
+            <div className="relative aspect-square w-full">
               <Image
-                src={series.image}
-                alt={`The GETA ${series.name} trail shoe`}
+                src={series.images[build]}
+                alt={`The GETA ${series.name} ${BUILDS[build].label}`}
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
+                className={`object-cover transition-opacity duration-500 ${sole ? "opacity-0" : "opacity-100"}`}
+              />
+              <Image
+                src={BUILDS[build].sole}
+                alt={`The GETA ${BUILDS[build].label} outsole`}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className={`object-cover transition-opacity duration-500 ${sole ? "opacity-100" : "opacity-0"}`}
               />
             </div>
-            <div
-              className="flex items-center justify-between px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em]"
-              style={{ backgroundColor: series.color, color: series.ink }}
-            >
-              <span className="font-bold">GETA {series.name}</span>
-              <span className="opacity-70">{series.color}</span>
-            </div>
-          </div>
+            <span className="pointer-events-none absolute bottom-3 right-3 border border-getah/15 bg-kabus/85 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-getah/70 backdrop-blur">
+              {sole ? "GETA™ outsole" : "Hover for sole"}
+            </span>
+          </button>
         </div>
 
         {/* technical readout */}
-        <div className={flip ? "md:order-1" : ""}>
-          <p className="mb-3 flex items-center gap-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-getah/60">
-            <span
-              className="inline-block h-2.5 w-2.5"
-              style={{ backgroundColor: series.color }}
-              aria-hidden="true"
-            />
-            Siri {num} · {series.state}
-          </p>
+        <div className={`relative ${flip ? "md:order-1" : ""}`}>
+          <TerrainContour
+            kind={series.contour}
+            className="pointer-events-none absolute -right-6 -top-10 h-56 w-56 md:h-72 md:w-72"
+            opacity={0.12}
+          />
+          <div className="relative">
+            <p className="mb-3 flex items-center gap-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-getah/60">
+              <span
+                className="inline-block h-2.5 w-2.5"
+                style={{ backgroundColor: series.color }}
+                aria-hidden="true"
+              />
+              Siri {num} · {series.state}
+            </p>
 
-          <h3 className="font-display text-5xl font-extrabold leading-none tracking-tight text-getah sm:text-6xl">
-            {series.name}
-          </h3>
-          <p className="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-getah/50">
-            {series.gunung} · {series.difficulty} · {series.hook}
-          </p>
+            <h3 className="font-display text-5xl font-extrabold leading-none tracking-tight text-getah sm:text-6xl">
+              {series.name}
+            </h3>
+            <p className="mt-3 font-mono text-xs uppercase tracking-[0.12em] text-getah/50">
+              {series.gunung} · {series.difficulty} · {series.hook}
+            </p>
 
-          <p className="mt-5 max-w-md text-lg leading-relaxed text-getah/70">{series.blurb}</p>
+            {/* build toggle */}
+            <div className="mt-5 inline-flex hair border-getah/20">
+              {(Object.keys(BUILDS) as Build[]).map((b) => (
+                <button
+                  key={b}
+                  type="button"
+                  onClick={() => setBuild(b)}
+                  aria-pressed={build === b}
+                  className="px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.12em] transition-colors"
+                  style={
+                    build === b
+                      ? { backgroundColor: series.color, color: series.ink }
+                      : { color: "rgba(23,20,15,0.55)" }
+                  }
+                >
+                  {BUILDS[b].label}
+                </button>
+              ))}
+            </div>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-getah/60">
+              {BUILDS[build].note}
+            </p>
 
-          {/* elevation as the headline figure */}
-          <div className="mt-7 flex items-end gap-3">
-            <span className="font-display text-6xl font-extrabold leading-none tabular-nums text-getah sm:text-7xl">
-              {series.elevation_m.toLocaleString()}
-            </span>
-            <span className="mb-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-getah/50">
-              metres
-              <br />
-              above sea
-            </span>
-          </div>
+            <p className="mt-4 max-w-md text-lg leading-relaxed text-getah/75">{series.blurb}</p>
 
-          <div className="mt-7">
-            <SpecRow label="Terrain" value={series.terrain} />
-            <Meter label="Grip" value={series.grip} color={series.color} />
-            <Meter label="Kalis air" value={series.water} color={series.color} />
+            {/* elevation as the headline figure */}
+            <div className="mt-7 flex items-end gap-3">
+              <span className="font-display text-6xl font-extrabold leading-none tabular-nums text-getah sm:text-7xl">
+                {series.elevation_m.toLocaleString()}
+              </span>
+              <span className="mb-1.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-getah/50">
+                metres
+                <br />
+                above sea
+              </span>
+            </div>
+
+            <div className="mt-6">
+              <Meter label="Grip" value={series.grip} color={series.color} />
+              <Meter label="Kalis air" value={series.water} color={series.color} />
+              <div className="flex items-start justify-between gap-4 py-3 hair-t border-getah/10">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-getah/60">
+                  Terrain
+                </span>
+                <span className="max-w-[62%] text-right font-mono text-[11px] uppercase tracking-[0.08em] text-getah/80">
+                  {series.terrain}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -11,12 +11,13 @@ export default function SeriesShowcase() {
             The collections
           </p>
           <h2 className="mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.02] tracking-tight sm:text-6xl">
-            Five peaks. Five shoes.
-            <span className="text-kabus/40"> Each tuned to its own terrain.</span>
+            Five peaks. Two ways up.
+            <span className="text-kabus/40"> Every collection comes Low or Boot.</span>
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-kabus/60">
-            Every GETA is named after a Malaysian mountain and built for what it demands. The
-            figure on each shoe is the summit it&apos;s made to reach.
+            Each GETA is named after a Malaysian mountain and built on the same GETA™ contour
+            outsole — pick the fast-and-light Low or the full-protection Boot. Hover any shoe to
+            see the sole.
           </p>
         </div>
       </div>

@@ -1,3 +1,8 @@
+export type Build = "low" | "boot";
+
+/** Contour pattern key — each evokes the character of the peak's terrain. */
+export type ContourKind = "ridge" | "peak" | "karst" | "rolling" | "long";
+
 export type Series = {
   /** Collection name, e.g. "Tahan" */
   name: string;
@@ -11,7 +16,7 @@ export type Series = {
   terrain: string;
   /** Difficulty label */
   difficulty: string;
-  /** Grip rating out of 5 (lug + compound) */
+  /** Grip rating out of 5 */
   grip: number;
   /** Waterproofing rating out of 5 */
   water: number;
@@ -19,12 +24,33 @@ export type Series = {
   color: string;
   /** Text colour that reads on `color` */
   ink: string;
-  /** Product image in /public/images */
-  image: string;
+  /** Product images per build */
+  images: Record<Build, string>;
   /** One-line pitch */
   blurb: string;
-  /** Short Malay/Manglish hook */
+  /** Short descriptor */
   hook: string;
+  /** Contour pattern that maps to this peak's terrain */
+  contour: ContourKind;
+};
+
+/** Each peak comes in two builds — same mountain, two ways up. */
+export const BUILDS: Record<
+  Build,
+  { label: string; tag: string; note: string; sole: string }
+> = {
+  low: {
+    label: "Low",
+    tag: "Jalan",
+    note: "Fast and light. Minimal low-profile trail-lifestyle.",
+    sole: "/images/geta-sole-low.png",
+  },
+  boot: {
+    label: "Boot",
+    tag: "Redah",
+    note: "Full protection. Mid-cut technical mountain boot.",
+    sole: "/images/geta-sole-boot.png",
+  },
 };
 
 export const SERIES: Series[] = [
@@ -39,10 +65,11 @@ export const SERIES: Series[] = [
     water: 4,
     color: "#ff5a1f",
     ink: "#17140f",
-    image: "/images/product-tahan.png",
+    images: { low: "/images/tahan-low.png", boot: "/images/tahan-boot.png" },
     blurb:
       "The all-rounder. Named after the highest peak in the Peninsula, tuned to handle whatever the backcountry puts in front of it.",
     hook: "Goes anywhere",
+    contour: "ridge",
   },
   {
     name: "Kinabalu",
@@ -55,10 +82,11 @@ export const SERIES: Series[] = [
     water: 3,
     color: "#1f9d57",
     ink: "#faf7ef",
-    image: "/images/product-kinabalu.png",
+    images: { low: "/images/kinabalu-low.png", boot: "/images/kinabalu-boot.png" },
     blurb:
       "The summit model. Sticky rubber for wet granite, warm enough for the 2am push to the roof of Borneo.",
     hook: "Made for the top",
+    contour: "peak",
   },
   {
     name: "Mulu",
@@ -71,26 +99,28 @@ export const SERIES: Series[] = [
     water: 4,
     color: "#c6f24e",
     ink: "#17140f",
-    image: "/images/product-mulu.png",
+    images: { low: "/images/mulu-low.png", boot: "/images/mulu-boot.png" },
     blurb:
       "The technical one. Extra-deep lugs and a rock plate for the sharpest limestone in the country.",
     hook: "Grips the sharp stuff",
+    contour: "karst",
   },
   {
     name: "Ledang",
     gunung: "Gunung Ledang",
     elevation_m: 1276,
     state: "Johor",
-    terrain: "Waterfalls, granite steps, weekend crowds",
-    difficulty: "Moderate",
+    terrain: "Waterfalls, granite steps, rope sections",
+    difficulty: "Scramble",
     grip: 4,
     water: 4,
     color: "#ff3e7a",
     ink: "#17140f",
-    image: "/images/product-ledang.png",
+    images: { low: "/images/ledang-low.png", boot: "/images/ledang-boot.png" },
     blurb:
-      "The everyday. Light and comfortable enough for a first hike or the walk to the kopitiam.",
-    hook: "City to trailhead",
+      "The scrambler. Light and grippy for steep granite steps, waterfalls and the odd rope section.",
+    hook: "Steep and grippy",
+    contour: "rolling",
   },
   {
     name: "Nuang",
@@ -103,9 +133,10 @@ export const SERIES: Series[] = [
     water: 3,
     color: "#2e6bff",
     ink: "#faf7ef",
-    image: "/images/product-nuang.png",
+    images: { low: "/images/nuang-low.png", boot: "/images/nuang-boot.png" },
     blurb:
       "The trainer. Cushioned for the punishing 18km round every KL hiker uses to get fit.",
     hook: "For the long grind",
+    contour: "long",
   },
 ];

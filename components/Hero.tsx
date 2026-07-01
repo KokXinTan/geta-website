@@ -67,15 +67,15 @@ export default function Hero() {
             <div className="relative aspect-square w-full md:aspect-[4/5]">
               <Image
                 src="/images/hero.png"
-                alt="The GETA Tahan trail shoe in hot orange and black on wet mossy granite, misty rainforest peaks behind"
+                alt="A hiker stepping across mossy granite in the misty rainforest wearing the GETA Tahan Low in burnt orange"
                 fill
                 priority
                 sizes="(max-width: 768px) 100vw, 45vw"
-                className="object-cover object-[72%_center]"
+                className="object-cover object-[center_62%]"
               />
             </div>
             <div className="flex items-center justify-between hair-t border-getah/10 bg-susu px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-getah/70">
-              <span className="font-bold text-getah">Siri 01 · Tahan</span>
+              <span className="font-bold text-getah">Siri 01 · Tahan Low</span>
               <span>2,187 mdpl</span>
             </div>
           </div>
