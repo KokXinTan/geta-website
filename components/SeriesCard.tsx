@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { BUILDS, SPEC_LABELS, type Build, type Series } from "@/lib/series";
+import { BUILDS, SPEC_LABELS, GRIP_INDEX, SOLE, type Build, type Series } from "@/lib/series";
 import TerrainContour from "./TerrainContour";
 
 function Meter({ label, value, color }: { label: string; value: number; color: string }) {
@@ -62,8 +62,8 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
                 className={`object-cover transition-opacity duration-500 ${sole ? "opacity-0" : "opacity-100"}`}
               />
               <Image
-                src={BUILDS[build].sole}
-                alt={`The GETA ${BUILDS[build].label} outsole`}
+                src={SOLE}
+                alt="The GETA contour outsole — the same sole on every pair"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className={`object-cover transition-opacity duration-500 ${sole ? "opacity-100" : "opacity-0"}`}
@@ -93,7 +93,7 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
             {series.gunung} · {series.difficulty} · {series.hook}
           </p>
 
-          {/* the swappable bit: this peak's contour panel */}
+          {/* the one part that changes: a contour design pattern on this colour */}
           <div className="mt-5 overflow-hidden hair border-getah/15">
             <div
               className="relative h-20"
@@ -106,14 +106,17 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
               />
               <div className="absolute inset-0 flex items-center justify-between px-4">
                 <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em]">
-                  Kontur panel
+                  Corak kontur
                 </span>
                 <span className="font-mono text-[11px] uppercase tracking-[0.12em] opacity-80">
-                  {series.gunung}
+                  {series.name}
                 </span>
               </div>
             </div>
           </div>
+          <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.14em] text-getah/40">
+            The one part that changes — this contour pattern, on {series.name} fabric.
+          </p>
 
           <p className="mt-4 max-w-md text-lg leading-relaxed text-getah/75">{series.blurb}</p>
 
@@ -152,14 +155,15 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
             </span>
           </div>
 
-          {/* specs — set by the build, shared across editions */}
+          {/* grip is the shared GETA sole; the rest is set by the build */}
           <div className="mt-6">
+            <Meter label="Grip · GETA™ sole" value={GRIP_INDEX} color={series.color} />
             {SPEC_LABELS.map((s) => (
               <Meter key={s.key} label={s.label} value={specs[s.key]} color={series.color} />
             ))}
           </div>
           <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-getah/40">
-            Specs set by build · {BUILDS[build].label}
+            Grip is the GETA™ sole — same on every pair. Rest set by build · {BUILDS[build].label}.
           </p>
         </div>
       </div>

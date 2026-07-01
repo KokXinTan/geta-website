@@ -3,11 +3,17 @@ export type Build = "low" | "boot";
 /** Contour pattern key — each is the topography of the peak's terrain. */
 export type ContourKind = "ridge" | "peak" | "karst" | "rolling" | "long";
 
-/** Performance is set by the build (the platform), not the colourway. */
-export type Specs = { grip: number; water: number; cushion: number; support: number };
+/**
+ * The GETA™ contour sole is shared across the whole range, so grip is a
+ * constant — same on every pair. The specs that vary are the ones the upper
+ * (the build) controls.
+ */
+export const GRIP_INDEX = 5;
+
+/** Set by the build (the upper/cut), not the colourway. */
+export type Specs = { water: number; cushion: number; support: number };
 
 export const SPEC_LABELS: { key: keyof Specs; label: string }[] = [
-  { key: "grip", label: "Grip" },
   { key: "water", label: "Kalis air" },
   { key: "cushion", label: "Bantalan" },
   { key: "support", label: "Sokongan" },
@@ -17,23 +23,24 @@ export const SPEC_LABELS: { key: keyof Specs; label: string }[] = [
  * Two builds share one platform and one GETA™ contour sole. The build sets the
  * performance; the peak edition swaps in a colour + that mountain's contour.
  */
+/** One GETA™ contour sole across the whole range — every pair, both builds. */
+export const SOLE = "/images/geta-sole-low.png";
+
 export const BUILDS: Record<
   Build,
-  { label: string; tag: string; note: string; sole: string; specs: Specs }
+  { label: string; tag: string; note: string; specs: Specs }
 > = {
   low: {
     label: "Low",
     tag: "Jalan",
     note: "Fast and light. Minimal low-profile trail-lifestyle.",
-    sole: "/images/geta-sole-low.png",
-    specs: { grip: 4, water: 3, cushion: 4, support: 2 },
+    specs: { water: 3, cushion: 4, support: 2 },
   },
   boot: {
     label: "Boot",
     tag: "Redah",
     note: "Full protection. Mid-cut technical mountain boot.",
-    sole: "/images/geta-sole-boot.png",
-    specs: { grip: 5, water: 5, cushion: 3, support: 5 },
+    specs: { water: 5, cushion: 3, support: 5 },
   },
 };
 
@@ -76,7 +83,7 @@ export const SERIES: Series[] = [
     ink: "#17140f",
     images: { low: "/images/tahan-low.png", boot: "/images/tahan-boot.png" },
     blurb:
-      "The home peak. Gunung Tahan's ridgelines mapped onto the heel — the highest point in the Peninsula, and where every GETA gets tested.",
+      "The home peak. The highest point in the Peninsula, drawn into the Tahan contour pattern — and where every GETA gets tested.",
     hook: "Home peak",
     contour: "ridge",
   },

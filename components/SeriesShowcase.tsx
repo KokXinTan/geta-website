@@ -15,10 +15,10 @@ export default function SeriesShowcase() {
             <span className="text-kabus/40"> Five peaks, five contours.</span>
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-kabus/60">
-            Every GETA rides the same platform and the same GETA™ contour sole. The build sets
-            the specs — fast-and-light Low or full-protection Boot. The edition swaps in one
-            thing: a peak&apos;s colour and its contour, printed on the heel. Hover any shoe to
-            see the sole.
+            Every GETA rides the same platform and the same GETA™ contour sole — same grip on
+            every pair. The build sets the cut and cushion: fast-and-light Low or full-protection
+            Boot. The edition changes one thing — a colour, and a contour pattern on that fabric.
+            Hover any shoe for the sole.
           </p>
         </div>
       </div>
