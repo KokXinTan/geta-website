@@ -2,28 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { BUILDS, SPEC_LABELS, GRIP_INDEX, SOLE, type Build, type Series } from "@/lib/series";
+import { BUILDS, SOLE, type Build, type Series } from "@/lib/series";
 import { CONTOURS } from "@/lib/contours";
 import TerrainContour from "./TerrainContour";
-
-function Meter({ label, value, color }: { label: string; value: number; color: string }) {
-  return (
-    <div className="flex items-center justify-between gap-4 py-3 hair-t border-getah/10">
-      <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-getah/60">
-        {label}
-      </span>
-      <span className="flex gap-1" aria-label={`${label} ${value} out of 5`}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <span
-            key={i}
-            className="h-2.5 w-5 transition-colors"
-            style={{ backgroundColor: i < value ? color : "rgba(23,20,15,0.1)" }}
-          />
-        ))}
-      </span>
-    </div>
-  );
-}
 
 export default function SeriesCard({ series, index }: { series: Series; index: number }) {
   const flip = index % 2 === 1;
@@ -32,7 +13,6 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
 
   const [build, setBuild] = useState<Build>("low");
   const [sole, setSole] = useState(false);
-  const specs = BUILDS[build].specs;
 
   return (
     <article className={`hair-b border-getah/10 ${bg}`}>
@@ -162,17 +142,6 @@ export default function SeriesCard({ series, index }: { series: Series; index: n
               above sea
             </span>
           </div>
-
-          {/* grip is the shared GETA sole; the rest is set by the build */}
-          <div className="mt-6">
-            <Meter label="Grip · GETA™ sole" value={GRIP_INDEX} color={series.color} />
-            {SPEC_LABELS.map((s) => (
-              <Meter key={s.key} label={s.label} value={specs[s.key]} color={series.color} />
-            ))}
-          </div>
-          <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-getah/40">
-            Grip is the GETA™ sole — same on every pair. Rest set by build · {BUILDS[build].label}.
-          </p>
         </div>
       </div>
     </article>
